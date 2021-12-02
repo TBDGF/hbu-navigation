@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class GetGraph {
-    private final GraphRepository repository;
 
     public Vertex getVertex(String label){
         return Graph.getVertex(label);

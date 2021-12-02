@@ -78,16 +78,20 @@ public class TraverseGraph {
 
     public void printPath(int start,int destination){
         if (start==destination){
-            System.out.print(Graph.getVertex(start).getLabel()+" ");
             this.webPath.getNodes().add(Graph.getVertex(start).getLabel());
+            System.out.print(Graph.getVertex(start).getLabel()+" ");
             return;
         }
         printPath(start,pre[destination]);
+        this.webPath.getNodes().add(Graph.getVertex(destination).getLabel());
+        this.webPath.getEdges().add(Graph.getVertex(pre[destination]).getLabel()+"-to-"+Graph.getVertex(destination).getLabel());
         System.out.print(Graph.getVertex(destination).getLabel()+" ");
     }
 
     public WebPath getPath(int start,int destination){
+        this.dijkstra(start);
         webPath=new WebPath();
+        printPath(start,destination);
         return webPath;
     }
 }

@@ -12,6 +12,7 @@ public class Vertex implements Comparable<Vertex>{
     private String information;
     private List<Edge> edges;
     private int distance;//遍历时距起点距离
+    private int x,y;//点的位置
 
     public Vertex() {
         this.label = null;
@@ -19,10 +20,12 @@ public class Vertex implements Comparable<Vertex>{
         this.edges = new LinkedList<>();
     }
 
-    public Vertex(String label, String information) {
+    public Vertex(String label, String information,int x,int y) {
         this.label = label;
         this.information = information;
         this.edges = new ArrayList<>();
+        this.x=x;
+        this.y=y;
     }
 
     public void addEdge(Vertex target, int weight) {

@@ -12,6 +12,7 @@ public class WebVertex {
     private String id;
     private String information;
     private Map<String,Map<String,String>> style;
+    private int x,y;//点的位置
 
     public WebVertex(String label, String information) {
         this.id = label;
@@ -26,6 +27,8 @@ public class WebVertex {
         this.id = vertex.getLabel();
         this.information = vertex.getInformation();
         this.style=new HashMap<>();
+        this.x= vertex.getX();
+        this.y= vertex.getY();
         Map<String,String> subLabel=new HashMap<>();
         subLabel.put("value", vertex.getLabel());
         this.style.put("label",subLabel);

@@ -25,14 +25,14 @@ public class Graph {
         return vertices;
     }
 
-    public static void addVertex(String label, String information) {
+    public static void addVertex(String label, String information,int x,int y) {
         for (Vertex vertex:vertices){
             if (vertex.getLabel().equals(label)){
                 System.out.println("repeated vertex label");
                 return;
             }
         }
-        vertices.add(new Vertex(label, information));
+        vertices.add(new Vertex(label, information,x,y));
     }
 
     public static void addEdge(Vertex source, Vertex target, int weight) {

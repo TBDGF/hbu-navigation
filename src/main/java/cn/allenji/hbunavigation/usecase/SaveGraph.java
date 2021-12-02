@@ -7,7 +7,4 @@ import lombok.AllArgsConstructor;
 public class SaveGraph {
     private final GraphRepository repository;
 
-    public void save(){
-        repository.saveGraph();
-    }
 }

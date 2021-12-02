@@ -5,13 +5,17 @@ import cn.allenji.hbunavigation.repository.MybatisRepository;
 import cn.allenji.hbunavigation.usecase.GetGraph;
 import cn.allenji.hbunavigation.usecase.ModifyGraph;
 import cn.allenji.hbunavigation.usecase.TraverseGraph;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ManualConfig {
-    private final GraphRepository graphRepository=new MybatisRepository();
+    @Autowired
+    MybatisRepository mybatisRepository;
 
 
     public GetGraph getGraph(){
-        return new GetGraph(graphRepository);
+        return new GetGraph();
     }
 
     public ModifyGraph modifyGraph(){

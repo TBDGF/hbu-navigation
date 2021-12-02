@@ -1,7 +1,7 @@
 package cn.allenji.hbunavigation.domain.port;
 
+import java.util.List;
+
 public interface GraphRepository {
-    public abstract void updateGraph();
-    public abstract void saveGraph();
-    public abstract void getGraph();
+    public abstract List getVertices();
 }
