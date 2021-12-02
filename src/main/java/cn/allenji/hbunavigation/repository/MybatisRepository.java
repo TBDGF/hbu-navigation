@@ -12,4 +12,9 @@ public class MybatisRepository implements GraphRepository {
     public void saveGraph() {
 
     }
+
+    @Override
+    public void getGraph(){
+        System.out.println("get graph");
+    }
 }

@@ -1,26 +1,56 @@
 package cn.allenji.hbunavigation.web;
 
+import cn.allenji.hbunavigation.ManualConfig;
 import cn.allenji.hbunavigation.domain.entity.Graph;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import cn.allenji.hbunavigation.usecase.GetGraph;
+import cn.allenji.hbunavigation.usecase.ModifyGraph;
+import cn.allenji.hbunavigation.usecase.TraverseGraph;
+import cn.allenji.hbunavigation.usecase.entity.WebGraph;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api")
 public class WebController {
+    private final ManualConfig manualConfig=new ManualConfig();
+    private final GetGraph getGraph= manualConfig.getGraph();
+    private final ModifyGraph modifyGraph=manualConfig.modifyGraph();
+    private final TraverseGraph traverseGraph= manualConfig.traverseGraph();
 
-    @GetMapping
+    @GetMapping("/hello")
     public String sayHello(){
-        Graph graph=new Graph();
-        graph.addVertex("node-5","info-5");
-        graph.addVertex("node-0","info-0");
-        graph.addVertex("node-1","info-1");
-        graph.addVertex("node-2","info-2");
-        graph.addVertex("node-3","info-3");
-        graph.addEdge(graph.getVertexId("node-0"),graph.getVertexId("node-1"),5);
-        graph.addEdge(graph.getVertexId("node-1"),graph.getVertexId("node-2"),5);
-        graph.addEdge(graph.getVertexId("node-2"),graph.getVertexId("node-3"),5);
-        graph.addEdge(graph.getVertexId("node-0"),graph.getVertexId("node-5"),5);
-        graph.DFSTravel(graph.getVertexId("node-1"));
-        return graph.toString();
+        Graph.addVertex("图书馆","info");
+        Graph.addVertex("北2门口","info-0");
+        Graph.addVertex("北1门口","info-1");
+        Graph.addVertex("南2门口","info-2");
+        Graph.addVertex("南1门口","info-3");
+        modifyGraph.addEdge(getGraph.getVertex("图书馆"),getGraph.getVertex("北2门口"),77);
+        modifyGraph.addEdge(getGraph.getVertex("北1门口"),getGraph.getVertex("图书馆"),134);
+        modifyGraph.addEdge(getGraph.getVertex("北1门口"),getGraph.getVertex("南2门口"),37);
+        modifyGraph.addEdge(getGraph.getVertex("北1门口"),getGraph.getVertex("北2门口"),210);
+        modifyGraph.addEdge(getGraph.getVertex("南2门口"),getGraph.getVertex("南1门口"),202);
+        modifyGraph.addEdge(getGraph.getVertex("南1门口"),getGraph.getVertex("北2门口"),39);
+        traverseGraph.DFSTravel(Graph.getVertexIndex("图书馆"));
+        return "Hello";
     }
 
+
+    @GetMapping("/get")
+    public WebGraph getGraph(String label){
+        return getGraph.getWebGraph();
+    }
+
+    @PostMapping("/vertex/add")
+    public void add(String label,String information){
+        modifyGraph.addVertex(label, information);
+    }
+
+    @PostMapping("/edge/add")
+    public void add(String source,String target,int weight){
+        modifyGraph.addEdge(getGraph.getVertex(source),getGraph.getVertex(target),weight);
+    }
+
+    @GetMapping("/traverse/dijkstra")
+    public void dijkstra(String label){
+        traverseGraph.dijkstra(Graph.getVertexIndex(label));
+    }
 }
