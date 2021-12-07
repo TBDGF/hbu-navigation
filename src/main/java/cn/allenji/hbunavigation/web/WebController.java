@@ -10,8 +10,7 @@ import cn.allenji.hbunavigation.usecase.entity.WebPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -20,14 +19,12 @@ public class WebController {
     ModifyGraph modifyGraph;
     private final ManualConfig manualConfig=new ManualConfig();
     private final GetGraph getGraph= manualConfig.getGraph();
-    private final TraverseGraph traverseGraph= manualConfig.traverseGraph();
 
     @GetMapping("/hello")
     public String sayHello(){
         modifyGraph.initGraph();
         return "Hello";
     }
-
 
     @GetMapping("/get")
     public WebGraph getGraph(){
@@ -46,8 +43,9 @@ public class WebController {
 
     @GetMapping("/traverse/dijkstra")
     public List<WebPath> dijkstra(String start,String destination){
+        TraverseGraph traverseGraph= manualConfig.traverseGraph();
         List<WebPath> paths=new LinkedList<>();
-        paths.add(traverseGraph.getPath(Graph.getVertexIndex(start),Graph.getVertexIndex(destination)));
+        paths.add(traverseGraph.getWebPath(Graph.getVertexIndex(start),Graph.getVertexIndex(destination)));
         return paths;
     }
 
@@ -55,5 +53,16 @@ public class WebController {
     public String update(){
         modifyGraph.updateGraph();
         return "OK";
+    }
+
+    @PostMapping("/traverse/paths")
+    public List<WebPath> getPaths(@RequestBody Map<String,Object> body){
+        System.out.println(body);
+        TraverseGraph traverseGraph= manualConfig.traverseGraph();
+        List<Integer> pass=new ArrayList<>();
+        for (Object object: (List<Object>)body.get("pass")){
+            pass.add(Graph.getVertexIndex((String) object));
+        }
+        return traverseGraph.getPaths(Graph.getVertexIndex((String) body.get("start")),Graph.getVertexIndex((String) body.get("destination")),pass);
     }
 }
