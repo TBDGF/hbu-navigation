@@ -7,32 +7,32 @@ import java.util.List;
 
 @Data
 public class Graph {
-    private static List<Vertex> vertices=new LinkedList<>();
+    private static List<Vertex> vertices = new LinkedList<>(); //邻接表，储存顶点List
 
     public static Vertex getVertex(int Index) {
         return vertices.get(Index);
     }
 
     public static Vertex getVertex(String label) {
-        for (Vertex vertex:vertices){
+        for (Vertex vertex : vertices) {
             if (vertex.getLabel().equals(label))
                 return vertex;
         }
         return null;
     }
 
-    public static List<Vertex> getVertices(){
+    public static List<Vertex> getVertices() {
         return vertices;
     }
 
-    public static void addVertex(String label, String information,int x,int y) {
-        for (Vertex vertex:vertices){
-            if (vertex.getLabel().equals(label)){
+    public static void addVertex(String label, String information, int x, int y) {
+        for (Vertex vertex : vertices) {
+            if (vertex.getLabel().equals(label)) {
                 System.out.println("repeated vertex label");
                 return;
             }
         }
-        vertices.add(new Vertex(label, information,x,y));
+        vertices.add(new Vertex(label, information, x, y));
     }
 
     public static void addEdge(Vertex source, Vertex target, int weight) {
